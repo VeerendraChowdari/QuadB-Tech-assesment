@@ -1,0 +1,30 @@
+fn longest_common_prefix(strings: &[&str]) -> String {
+    if strings.is_empty() {
+        return String::new(); // If the input array is empty, return an empty string
+    }
+
+    let first_string = strings[0]; // Take the first string as a reference
+    let mut prefix = String::new(); // Initialize an empty string to store the common prefix
+
+    'outer: for (i, c) in first_string.chars().enumerate() {
+        for string in &strings[1..] {
+            // Iterate through the remaining strings
+            if let Some(next_char) = string.chars().nth(i) {
+                // If the character at index i matches in all strings, add it to the prefix
+                if next_char != c {
+                    break 'outer; // Break the outer loop if the characters don't match
+                }
+            } else {
+                break 'outer; // Break the outer loop if any string is shorter than the first string
+            }
+        }
+        prefix.push(c); // Add the character to the prefix
+    }
+
+    prefix
+}
+
+fn main() {
+    let strings = ["flower", "flow", "flight"];
+    println!("Longest common prefix: {}", longest_common_prefix(&strings));
+}
